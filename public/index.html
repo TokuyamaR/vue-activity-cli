@@ -1,17 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>vue-activity-cli</title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but vue-activity-cli doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vue activity cli</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <!-- Bulma Version 0.7.2-->
+    <!--Bulmaを導入することで、class名にてcssを設定できる(画像の大きさなど)-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/index.css">
+</head>
+<body>
+
+<div id="app"></div>
+<!-- built files will be auto injected -->
+<script src="../src/components/ActivityItem.vue"></script>
+<script>
+  var app = new Vue({
+    el: ' #vueGoalApp',
+    data: {
+      isFormDisplayed: false,
+      message: 'Hello Vue',
+      titleMessage: 'Title Message Vueeeeeeee!!',
+      isTextDisplayed: true,
+      newActivity: {
+        title: '',
+        notes: '',
+      },
+      items: {1: {name: 'Raido'}, 2: {name: 'Miho'}},
+      user: {
+        name: 'Tokuuyaman',
+        id: 'Aj34jknvncx98812'
+      },
+      activities: {
+        '1546968934': {
+          id: '1546968934',
+          title: 'Learn Vue.js',
+          note: 'I have started since last week and it has good ',
+          progress: 0,
+          category: '1546969049',
+          createdAt: 1546969144391,
+          updatedAt: 1546969144391,
+        },
+        '1546969212': {
+          id: '1546969212',
+          title: 'Cooking Dinner',
+          note: 'I have to buy eggs',
+          progress: 0,
+          category: '1546969049',
+          createdAt: 1546969144391,
+          updatedAt: 1546969144391,
+        },
+      },
+      categories: {
+        '1546969049': {text: 'books'},
+        '1546969225': {text: 'movies'}
+      }
+    },
+    methods: {
+      toggleTextDisplay() {
+        this.isTextDisplayed = !this.isTextDisplayed
+      },
+      toggleFormDisplay() {
+        this.isFormDisplayed = !this.isFormDisplayed
+      },
+      createActivity() {
+        console.log(this.newActivity)
+      }
+    }
+  });
+</script>
+</body>
 </html>
