@@ -21,17 +21,17 @@
         <section class="container">
             <div class="columns">
                 <div class="column is-3">
-                    <a v-if="!isFormDisplayed" class="button is-primary is-block is-alt is-large"
-                       href="#" @click="toggleFormDisplay">New Activity</a>
+                    <a v-if="!isFormDisplayed"
+                       class="button is-primary is-block is-alt is-large"
+                       href="#"
+                       @click="toggleFormDisplay">New Activity</a>
                     <div v-if="isFormDisplayed" class="create-form">
                         <h2 class="title">Create Activity</h2>
                         <form id="form">
                             <div class="field">
                                 <label class="label">Title</label>
                                 <div class="control">
-                                    <input v-model="newActivity.title"
-                                           type="text"
-                                           class="input"
+                                    <input v-model="newActivity.title" type="text" class="input"
                                            placeholder="Buy movie tickets"
                                     >
                                 </div>
@@ -40,15 +40,21 @@
                                 <label class="label">Notes</label>
                                 <div class="control">
                                     <textarea v-model="newActivity.notes" class="textarea"
-                                              placeholder="Write some notes here"></textarea>
+                                              placeholder="Write some notes here">
+
+                                    </textarea>
                                 </div>
                             </div>
                             <div class="field is-ground">
                                 <div class="control">
-                                    <button class="button is-link" @click="createActivity">Create Goal</button>
+                                    <button class="button is-link"
+                                            :disabled="!isFormValid"
+                                            @click="createActivity">Create Goal
+                                    </button>
                                 </div>
                                 <div class="control">
-                                    <button class="button is-text" @click="toggleFormDisplay">Cancel</button>
+                                    <button class="button is-text" @click="toggleFormDisplay">Cancel
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -56,7 +62,9 @@
                 </div>
                 <div class="column is-9">
                     <div class="box content">
-                        <ActivityItem v-for="activity in activities" :key="activity.id" :activity="activity"/>
+                        <ActivityItem v-for="activity in activities"
+                                      :key="activity.id"
+                                      :activity="activity"/>
                     </div>
                 </div>
             </div>
@@ -65,8 +73,59 @@
 </template>
 
 <script>
+    import ActivityItem from '@/components/ActivityItem'
+    import {fetchActivities, fetchCategories, fetchUser} from '@/api'
+
     export default {
         name: 'App',
+        components: {ActivityItem},
+        data() {
+            return {
+                isFormDisplayed: false,
+                message: 'Hello Vue',
+                titleMessage: 'Title Message Vueeeeeeee!!',
+                isTextDisplayed: true,
+                newActivity: {
+                    title: '',
+                    notes: '',
+                },
+                items: {1: {name: 'Raido'}, 2: {name: 'Miho'}},
+                user: {},
+                activities: {},
+                categories: {}
+            }
+        },
+        computed: {
+            isFormValid() {
+                console.log('calling isFormValid !!!!!!!!')
+                return this.newActivity.title && this.newActivity.notes
+            }
+        },
+        created() {
+            this.activities = fetchActivities();
+            this.categories = fetchCategories();
+            this.user = fetchUser();
+
+            console.log(this.activities);
+            console.log(this.categories);
+            console.log(this.user)
+
+        },
+        methods: {
+            toggleTextDisplay() {
+                this.isTextDisplayed = !this.isTextDisplayed
+            },
+            toggleFormDisplay() {
+                this.isFormDisplayed = !this.isFormDisplayed
+            },
+            createActivity() {
+                console.log(this.newActivity)
+            },
+            isFormValid() {
+                // console.log('isFormValid called!!!!!!!!')
+                // return this.newActivity.title && this.newActivity.notes
+            }
+        }
     }
 </script>
 
