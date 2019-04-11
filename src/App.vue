@@ -66,6 +66,8 @@
                         <ActivityItem v-for="activity in activities"
                                       :key="activity.id"
                                       :activity="activity"/>
+                        <div class="activity-length">You have {{ activitiesLength }} activities.</div>
+                        <div class="activity-motivation">Your progress : {{ activityMotivation }}</div>
                     </div>
                 </div>
             </div>
@@ -96,24 +98,21 @@
             }
         },
         computed: {
-            // isFormValid() {
-            //     return this.newActivity.title && this.newActivity.notes
-            // }
             fullAppName() {
                 return this.appName + ' by ' + this.creator
-            }
-        },
-        watch: {
-            creator(val) {
-                watchAppName = this.appName + ' by ' + val;
-                console.log(watchAppName);
             },
-            appName(val) {
-                watchAppName = val + ' by ' + this.creator;
-                console.log(watchAppName);
-            }
-
-
+            activitiesLength() {
+                return Object.keys(this.activities).length
+            },
+            activityMotivation() {
+                if (this.activitiesLength && this.activitiesLength < 5) {
+                    return 'Good!'
+                } else if (this.activitiesLength >= 5) {
+                    return 'Excellent!!'
+                } else {
+                    return 'You have no activity... So sad :('
+                }
+            },
         },
         created() {
             this.activities = fetchActivities();
