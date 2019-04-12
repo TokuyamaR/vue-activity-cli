@@ -4,7 +4,6 @@
             <div class="container">
                 <div class="navbar-brand">
                     <h1>{{ fullAppName }}</h1>
-                    <h1>{{ watchAppName }}</h1>
                 </div>
             </div>
         </nav>
@@ -44,6 +43,18 @@
                                               placeholder="Write some notes here">
 
                                     </textarea>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Category</label>
+                                <div class="control">
+                                    <select v-model="newActivity.category" class="select">
+                                        <option disabled value="">Please Select One</option>
+                                        <option v-for="category in categories"
+                                                v-bind:key="category.id"
+                                        >{{ category.text }}
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="field is-ground">
@@ -90,6 +101,7 @@
                 newActivity: {
                     title: '',
                     notes: '',
+                    category: ''
                 },
                 items: {1: {name: 'Raido'}, 2: {name: 'Miho'}},
                 user: {},
@@ -110,7 +122,7 @@
                 } else if (this.activitiesLength >= 5) {
                     return 'Excellent!!'
                 } else {
-                    return 'You have no activity... So sad :('
+                    return 'No activities... So sad :('
                 }
             },
         },
@@ -132,7 +144,7 @@
                 console.log(this.newActivity)
             },
             isFormValid() {
-                console.log('isFormValid called!!!!!!!!')
+                // console.log('isFormValid called!!!!!!!!')
                 return this.newActivity.title && this.newActivity.notes
             }
         }
