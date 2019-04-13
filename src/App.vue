@@ -21,56 +21,7 @@
         <section class="container">
             <div class="columns">
                 <div class="column is-3">
-                    <a v-if="!isFormDisplayed"
-                       class="button is-primary is-block is-alt is-large"
-                       href="#"
-                       @click="toggleFormDisplay">New Activity</a>
-                    <div v-if="isFormDisplayed" class="create-form">
-                        <h2 class="title">Create Activity</h2>
-                        <form id="form">
-                            <div class="field">
-                                <label class="label">Title</label>
-                                <div class="control">
-                                    <input v-model="newActivity.title" type="text" class="input"
-                                           placeholder="Buy movie tickets"
-                                    >
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label class="label">Notes</label>
-                                <div class="control">
-                                    <textarea v-model="newActivity.notes" class="textarea"
-                                              placeholder="Write some notes here">
-
-                                    </textarea>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label class="label">Category</label>
-                                <div class="control">
-                                    <select v-model="newActivity.category" class="select">
-                                        <option disabled value="">Please Select One</option>
-                                        <option v-for="category in categories"
-                                                v-bind:key="category.id"
-                                        >{{ category.text }}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="field is-ground">
-                                <div class="control">
-                                    <button class="button is-link"
-                                            :disabled="!isFormValid()"
-                                            @click="createActivity">Create Goal
-                                    </button>
-                                </div>
-                                <div class="control">
-                                    <button class="button is-text" @click="toggleFormDisplay">Cancel
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    <ActivityCreate :categories="categories"/>
                 </div>
                 <div class="column is-9">
                     <div class="box content">
@@ -88,21 +39,18 @@
 
 <script>
     import ActivityItem from '@/components/ActivityItem'
+    import ActivityCreate from "./components/ActivityCreate";
     import {fetchActivities, fetchCategories, fetchUser} from '@/api'
+
 
     export default {
         name: 'App',
-        components: {ActivityItem},
+        components: {ActivityCreate, ActivityItem},
         data() {
             return {
                 isFormDisplayed: false,
                 creator: 'Tokuyaman',
                 appName: 'Activity Planner',
-                newActivity: {
-                    title: '',
-                    notes: '',
-                    category: ''
-                },
                 items: {1: {name: 'Raido'}, 2: {name: 'Miho'}},
                 user: {},
                 activities: {},
@@ -136,18 +84,7 @@
             console.log(this.user)
 
         },
-        methods: {
-            toggleFormDisplay() {
-                this.isFormDisplayed = !this.isFormDisplayed
-            },
-            createActivity() {
-                console.log(this.newActivity)
-            },
-            isFormValid() {
-                // console.log('isFormValid called!!!!!!!!')
-                return this.newActivity.title && this.newActivity.notes
-            }
-        }
+        methods: {}
     }
 </script>
 
