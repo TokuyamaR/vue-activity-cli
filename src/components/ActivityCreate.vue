@@ -3,7 +3,7 @@
         <a v-if="!isFormDisplayed"
            class="button is-primary is-block is-alt is-large"
            href="#"
-           @click="toggleFormDisplay">New Activity</a>
+           @click.prevent="toggleFormDisplay">New Activity</a>
         <div v-if="isFormDisplayed" class="create-form">
             <h2 class="title">Create Activity</h2>
             <form id="form">
@@ -39,7 +39,7 @@
                     <div class="control">
                         <button class="button is-link"
                                 :disabled="!isFormValid()"
-                                @click="createActivity">Create Goal
+                                @click.prevent="createActivity">Create Goal
                         </button>
                     </div>
                     <div class="control">
@@ -53,6 +53,8 @@
 </template>
 
 <script>
+    import {createActivity} from '@/api';
+
     export default {
         props: {
             categories: {
@@ -75,7 +77,8 @@
                 this.isFormDisplayed = !this.isFormDisplayed
             },
             createActivity() {
-                console.log(this.newActivity)
+                const activity = createActivity(this.newActivity)
+                this.$emit('activityCreated', {...activity});
             },
             isFormValid() {
                 // console.log('isFormValid called!!!!!!!!')
