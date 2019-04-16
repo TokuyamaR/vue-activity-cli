@@ -1,3 +1,24 @@
+const activities = {
+    '1546968934': {
+        id: '1546968934',
+        title: 'Learn Vue.js',
+        note: 'I have started since last week and it has good ',
+        progress: 0,
+        category: '1546969049',
+        createdAt: 1546969144391,
+        updatedAt: 1546969144391,
+    },
+    '1546969212': {
+        id: '1546969212',
+        title: 'Cooking Dinner',
+        note: 'I have to buy eggs',
+        progress: 0,
+        category: '1546969049',
+        createdAt: 1546969144391,
+        updatedAt: 1546969144391,
+    }
+};
+
 export const fetchActivities = () => {
     return {
         '1546968934': {
