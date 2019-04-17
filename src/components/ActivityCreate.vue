@@ -76,15 +76,23 @@
             toggleFormDisplay() {
                 this.isFormDisplayed = !this.isFormDisplayed
             },
+
+            resetActivity() {
+                this.newActivity.title = '';
+                this.newActivity.notes = '';
+                this.newActivity.category = '';
+            },
             createActivityAPI() {
                 // debugger;
                 createActivityAPI(this.newActivity)
                     .then(activity => {
+                        this.resetActivity();
+                        this.isFormDisplayed = false;
                         this.$emit('activityCreated', {...activity});
                     });
             },
             isFormValid() {
-                return this.newActivity.title && this.newActivity.notes
+                return this.newActivity.title && this.newActivity.notes && this.newActivity.category;
             }
         }
     }
