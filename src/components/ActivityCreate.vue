@@ -77,8 +77,8 @@
                 this.isFormDisplayed = !this.isFormDisplayed
             },
             createActivityAPI() {
-                debugger;
-                createActivity(this.newActivity)
+                // debugger;
+                createActivityAPI(this.newActivity)
                     .then(activity => {
                         this.$emit('activityCreated', {...activity});
                     });

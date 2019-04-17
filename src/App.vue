@@ -38,6 +38,7 @@
 </template>
 
 <script>
+    import Vue from 'vue';
     import ActivityItem from '@/components/ActivityItem'
     import ActivityCreate from "./components/ActivityCreate";
     import {fetchActivities, fetchCategories, fetchUser} from '@/api'
@@ -75,7 +76,10 @@
             },
         },
         created() {
-            this.activities = fetchActivities();
+            fetchActivities()
+                .then(activities => {
+                    this.activities = activities
+                });
             this.categories = fetchCategories();
             this.user = fetchUser();
 
@@ -86,8 +90,10 @@
         },
         methods: {
             addActivity(newActivity) {
-                debugger;
-                console.log(newActivity);
+                // this.activities[newActivity.id] = newActivity;
+                Vue.set(this.activities, newActivity.id, newActivity);
+                // debugger;
+                // consle.log(newActivity);
             }
         }
     }
