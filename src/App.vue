@@ -7,29 +7,29 @@
                 </div>
             </div>
         </nav>
-        <nav class="navbar is-white">
-            <div class="container">
-                <div class="navbar-menu">
-                    <div class="navbar-start">
-                        <a class="navbar-item is-active" href="#">Newest</a>
-                        <a class="navbar-item" href="#">In Progress</a>
-                        <a class="navbar-item" href="#">Finished</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <TheNavbar/>
         <section class="container">
             <div class="columns">
                 <div class="column is-3">
                     <ActivityCreate @activityCreated="addActivity" :categories="categories"/>
                 </div>
                 <div class="column is-9">
-                    <div class="box content">
-                        <ActivityItem v-for="activity in activities"
-                                      :key="activity.id"
-                                      :activity="activity"/>
-                        <div class="activity-length">You have {{ activitiesLength }} activities.</div>
-                        <div class="activity-motivation">Your progress : {{ activityMotivation }}</div>
+                    <div class="box content" :class="{fetching: isFetching, 'has-error':error}">
+                        <div v-if="error">
+                            {{ error }}
+                        </div>
+                        <div v-else>
+                            <div v-if="isFetching">
+                                Loading...
+                            </div>
+                            <ActivityItem v-for="activity in activities"
+                                          :key="activity.id"
+                                          :activity="activity"/>
+                        </div>
+                        <div v-if="!isFetching">
+                            <div class="activity-length">You have {{ activitiesLength }} activities.</div>
+                            <div class="activity-motivation">Your progress : {{ activityMotivation }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -41,17 +41,20 @@
     import Vue from 'vue';
     import ActivityItem from '@/components/ActivityItem'
     import ActivityCreate from "./components/ActivityCreate";
+    import TheNavbar from "./components/TheNavbar";
     import {fetchActivities, fetchCategories, fetchUser} from '@/api'
 
 
     export default {
         name: 'App',
-        components: {ActivityCreate, ActivityItem},
+        components: {ActivityCreate, ActivityItem, TheNavbar},
         data() {
             return {
                 isFormDisplayed: false,
                 creator: 'Tokuyaman',
                 appName: 'Activity Planner',
+                isFetching: false,
+                error: null,
                 items: {1: {name: 'Raido'}, 2: {name: 'Miho'}},
                 user: {},
                 activities: {},
@@ -76,12 +79,15 @@
             },
         },
         created() {
+            this.isFetching = true;
             fetchActivities()
                 .then(activities => {
-                    this.activities = activities
+                    this.activities = activities;
+                    this.isFetching = false;
                 })
                 .catch(err => {
-                    console.log(err)
+                    this.error = err;
+                    this.isFetching = false;
                 });
             this.categories = fetchCategories();
             this.user = fetchUser();
@@ -93,10 +99,7 @@
         },
         methods: {
             addActivity(newActivity) {
-                // this.activities[newActivity.id] = newActivity;
                 Vue.set(this.activities, newActivity.id, newActivity);
-                // debugger;
-                // consle.log(newActivity);
             }
         }
     }
@@ -117,6 +120,14 @@
 
     footer {
         background-color: #F2F6FA !important;
+    }
+
+    .fetching {
+        border: 2px solid orange;
+    }
+
+    .has-error {
+        border: 2px solid red;
     }
 
     .fetching {
