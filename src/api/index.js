@@ -19,11 +19,21 @@ const activities = {
     }
 };
 
+const canContinue = () => {
+    const rndNumber = Math.floor(Math.random() * 10);
+
+    return rndNumber > 5;
+};
+
 export const fetchActivities = () => {
 
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            resolve(activities)
+            if (canContinue()) {
+                resolve(activities);
+            } else {
+                reject('Cannot fetch activities');
+            }
         }, 2000);
     });
 };

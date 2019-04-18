@@ -79,6 +79,9 @@
             fetchActivities()
                 .then(activities => {
                     this.activities = activities
+                })
+                .catch(err => {
+                    console.log(err)
                 });
             this.categories = fetchCategories();
             this.user = fetchUser();

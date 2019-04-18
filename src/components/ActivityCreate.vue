@@ -86,9 +86,9 @@
                 // debugger;
                 createActivityAPI(this.newActivity)
                     .then(activity => {
+                        this.$emit('activityCreated', {...activity});
                         this.resetActivity();
                         this.isFormDisplayed = false;
-                        this.$emit('activityCreated', {...activity});
                     });
             },
             isFormValid() {
