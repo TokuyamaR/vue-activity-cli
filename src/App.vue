@@ -70,9 +70,9 @@
             },
             activityMotivation() {
                 if (this.activitiesLength && this.activitiesLength < 5) {
-                    return 'Good!'
+                    return 'You have activities :)'
                 } else if (this.activitiesLength >= 5) {
-                    return 'Excellent!!'
+                    return 'Good!! You have many activities!'
                 } else {
                     return 'No activities... So sad :('
                 }
