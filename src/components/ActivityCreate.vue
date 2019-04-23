@@ -84,7 +84,6 @@
                 this.newActivity.category = '';
             },
             createActivityAPI() {
-                // debugger;
                 createActivityAPI(this.newActivity)
                     .then(activity => {
                         this.$emit('activityCreated', {...activity});
