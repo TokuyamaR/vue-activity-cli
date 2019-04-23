@@ -12,7 +12,7 @@
             <div class="media-content">
                 <div class="content">
                     <p>
-                        <a href="#">Tokuyaman</a> updated {{ activity.updatedAt }} minutes ago &nbsp;
+                        <a href="#">Tokuyaman</a> updated {{ activity.updatedAt | prettyTime }} &nbsp;
                     </p>
                 </div>
             </div>
