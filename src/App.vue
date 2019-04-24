@@ -91,12 +91,13 @@
                     this.error = err;
                     this.isFetching = false;
                 });
-            this.categories = fetchCategories();
             this.user = fetchUser();
+            this.categories = fetchCategories()
+                .then(categories => {
+                        this.categories = categories
+                    }
+                )
 
-            console.log(this.activities);
-            console.log(this.categories);
-            console.log(this.user)
 
         },
         methods: {

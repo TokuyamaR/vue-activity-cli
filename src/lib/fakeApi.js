@@ -37,7 +37,7 @@ class FakeApi {
 
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                if (canContinue()) {
+                if (this.canContinue()) {
                     resolve(data[resource]);
                 } else {
                     reject('Cannot fetch' + resource);

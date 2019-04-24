@@ -3,10 +3,7 @@ import fakeApi from '@/lib/fakeApi';
 const generateUid = () => Math.floor(new Date() * Math.random())
 
 export const fetchActivities = () => {
-
-    return new Promise((resolve, reject) => {
-        return fakeApi.get('activities');
-    });
+    return fakeApi.get('activities');
 };
 
 export const fetchCategories = () => {
