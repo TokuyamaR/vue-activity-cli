@@ -14,7 +14,7 @@ const data = {
             title: 'Cooking Dinner',
             note: 'I have to buy eggs',
             progress: 60,
-            category: '1546969049',
+            category: '1546969225',
             createdAt: 1546969144391,
             updatedAt: 1546969144391,
         }
@@ -30,19 +30,28 @@ class FakeApi {
     canContinue() {
         const rndNumber = Math.floor(Math.random() * 10);
 
-        return rndNumber > 5;
+        if (rndNumber > 5) {
+            return true
+        }
+        return false
     };
 
-    get(resource) {
-
+    get(resource, {force = 0}) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                if (this.canContinue()) {
-                    resolve(data[resource]);
+                if (force || this.canContinue()) {
+                    resolve({...data[resource]});
                 } else {
                     reject('Cannot fetch' + resource);
                 }
             }, 1000);
+        });
+    };
+
+    post(resource, item) {
+        return new Promise((resolve, reject) => {
+            data[resource][item.id] = item;
+            resolve(item);
         });
     };
 }

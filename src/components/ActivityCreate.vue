@@ -3,7 +3,7 @@
         <a v-if="!isFormDisplayed"
            class="button is-primary is-block is-alt is-large"
            href="#"
-           @click.prevent="toggleFormDisplay">New Activity</a>
+           @click="toggleFormDisplay">New Activity</a>
         <div v-if="isFormDisplayed" class="create-form">
             <h2 class="title">Create Activity</h2>
             <form id="form">
@@ -44,7 +44,7 @@
                         </button>
                     </div>
                     <div class="control">
-                        <button class="button is-text" @click="toggleFormDisplay">Cancel
+                        <button class="button is-text" @click.prevent="toggleFormDisplay">Cancel
                         </button>
                     </div>
                 </div>

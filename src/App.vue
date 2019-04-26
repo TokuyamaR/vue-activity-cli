@@ -1,5 +1,5 @@
 <template>
-    <div id="activityApp">
+    <div v-if="isDataLoaded" id="activityApp">
         <nav class="navbar is-white topNav">
             <div class="container">
                 <div class="navbar-brand">
@@ -42,14 +42,14 @@
 <script>
     import Vue from 'vue';
     import ActivityItem from '@/components/ActivityItem'
-    import ActivityCreate from "./components/ActivityCreate";
-    import TheNavbar from "./components/TheNavbar";
+    import ActivityCreate from "@/components/ActivityCreate";
+    import TheNavbar from "@/components/TheNavbar";
     import {fetchActivities, fetchCategories, fetchUser} from '@/api'
 
 
     export default {
         name: 'App',
-        components: {ActivityCreate, ActivityItem, TheNavbar},
+        components: {ActivityItem, ActivityCreate, TheNavbar},
         data() {
             return {
                 isFormDisplayed: false,
@@ -57,10 +57,9 @@
                 appName: 'Activity Planner',
                 isFetching: false,
                 error: null,
-                items: {1: {name: 'Raido'}, 2: {name: 'Miho'}},
                 user: {},
-                activities: {},
-                categories: {}
+                activities: null,
+                categories: null
             }
         },
         computed: {
@@ -79,6 +78,9 @@
                     return 'No activities... So sad :('
                 }
             },
+            isDataLoaded() {
+                return this.activities && this.categories;
+            }
         },
         created() {
             this.isFetching = true;
@@ -92,13 +94,11 @@
                     this.isFetching = false;
                 });
             this.user = fetchUser();
-            this.categories = fetchCategories()
+            fetchCategories()
                 .then(categories => {
-                        this.categories = categories
+                        this.categories = categories;
                     }
                 )
-
-
         },
         methods: {
             addActivity(newActivity) {
